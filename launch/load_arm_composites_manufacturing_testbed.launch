@@ -1,0 +1,5 @@
+<launch>
+    <arg name="load_payloads" default="false"/>
+    <arg name="leeward_mid_final" default="false"/>
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find rpi_arm_composites_manufacturing_testbed)/urdf/arm_composites_manufacturing_testbed.xacro' load_payloads:=$(arg load_payloads) leeward_mid_final:=$(arg leeward_mid_final)" />
+</launch>

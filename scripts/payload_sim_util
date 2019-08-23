@@ -1,0 +1,74 @@
+#!/usr/bin/env python
+
+import rospy
+import sys
+from industrial_payload_manager.srv import UpdatePayloadPose, UpdatePayloadPoseRequest
+from geometry_msgs.msg import Quaternion
+
+def main():
+    
+    rospy.init_node("payload_sim_util", anonymous=True)
+    
+    update_payload_pose=rospy.ServiceProxy("update_payload_pose", UpdatePayloadPose)
+    update_payload_pose.wait_for_service(1)
+    
+    q=Quaternion(0,0,1,0)
+    
+    if len(sys.argv) > 1:
+        if sys.argv[1] == "remove_panels_to_start":
+            print "Moving panels to start!"
+            leeward_mid_panel_req=UpdatePayloadPoseRequest()
+            leeward_mid_panel_req.header.frame_id="world"
+            leeward_mid_panel_req.name="leeward_mid_panel"
+            leeward_mid_panel_req.pose.position.x=0.916
+            leeward_mid_panel_req.pose.position.y=-4.00
+            leeward_mid_panel_req.pose.position.z=0.51
+            leeward_mid_panel_req.pose.orientation=q
+            update_payload_pose(leeward_mid_panel_req)
+            
+            leeward_tip_panel_req=UpdatePayloadPoseRequest()
+            leeward_tip_panel_req.header.frame_id="world"
+            leeward_tip_panel_req.name="leeward_tip_panel"
+            leeward_tip_panel_req.pose.position.x=3.5
+            leeward_tip_panel_req.pose.position.y=-4.00
+            leeward_tip_panel_req.pose.position.z=0.51
+            leeward_tip_panel_req.pose.orientation=q
+            update_payload_pose(leeward_tip_panel_req)
+            
+            exit(0)
+            
+        if sys.argv[1] == "load_leeward_mid_panel":
+            print "Loading leeward_mid_panel!"
+            leeward_mid_panel_req=UpdatePayloadPoseRequest()
+            leeward_mid_panel_req.header.frame_id="world"
+            leeward_mid_panel_req.name="leeward_mid_panel"
+            leeward_mid_panel_req.pose.position.x=0.916
+            leeward_mid_panel_req.pose.position.y=-0.798
+            leeward_mid_panel_req.pose.position.z=0.51
+            leeward_mid_panel_req.pose.orientation=q
+            update_payload_pose(leeward_mid_panel_req)
+            
+            exit(0)
+            
+        if sys.argv[1] == "load_leeward_tip_panel":
+            print "Loading leeward_tip_panel!"
+                        
+            leeward_tip_panel_req=UpdatePayloadPoseRequest()
+            leeward_tip_panel_req.header.frame_id="world"
+            leeward_tip_panel_req.name="leeward_tip_panel"
+            leeward_tip_panel_req.pose.position.x=0.916
+            leeward_tip_panel_req.pose.position.y=-0.798
+            leeward_tip_panel_req.pose.position.z=0.51
+            leeward_tip_panel_req.pose.orientation=q
+            update_payload_pose(leeward_tip_panel_req)
+            
+            exit(0)
+    
+    print "Error: Invalid command!"
+    print "Valid commands: remove_panels_to_start, load_leeward_mid_panel, load_leeward_tip_panel"
+    exit(1)
+    
+    
+
+if __name__ == '__main__':
+    main()

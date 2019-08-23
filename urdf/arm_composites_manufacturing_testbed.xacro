@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<robot name="arm_composites_manufacturing_testbed" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:arg name="load_payloads" default="false"/>
+  <xacro:arg name="leeward_mid_final" default="false"/>
+  <xacro:include filename="$(find rpi_arm_composites_manufacturing_testbed)/urdf/irb6640_180_255_with_vacuum_gripper.xacro"/>
+
+  <xacro:include filename="$(find rpi_arm_composites_manufacturing_testbed)/urdf/panel_nest.xacro"/>
+
+  <xacro:include filename="$(find rpi_arm_composites_manufacturing_testbed)/urdf/pickup_nest.xacro"/>
+  
+  <xacro:include filename="$(find rpi_arm_composites_manufacturing_testbed)/urdf/testbed_walls_macro.xacro"/>
+
+  <xacro:testbed_walls prefix=""/>
+
+  <link name="world"/>
+
+  <link name="floor">
+    <visual name="visual">      
+      <origin xyz="1 0 -.005"/>
+      <geometry><box size="8 8 0.01"/></geometry>
+      <material name="grey"/>
+    </visual>
+    <collision name="collision">      
+      <origin xyz="1 0 -.005"/>
+      <geometry><box size="8 8 0.01"/></geometry>
+    </collision>
+  </link>
+  
+  <!--<link name="ceiling">
+    <visual name="visual">      
+      <origin xyz="1 0 2.5"/>
+      <geometry><box size="8 8 0.01"/></geometry>
+      <material name="grey"/>
+    </visual>
+    <collision name="collision">      
+      <origin xyz="1 0 2.5"/>
+      <geometry><box size="8 8 0.01"/></geometry>
+    </collision>
+  </link>
+  
+  <link name="wall1">
+    <visual name="visual">      
+      <origin xyz="2.5 0.5 1.3"/>
+      <geometry><box size="0.01 2 2"/></geometry>
+      <material name="grey"/>
+    </visual>
+    <collision name="collision">      
+      <origin xyz="2.5 0.5 1.3"/>
+      <geometry><box size="0.01 2 2"/></geometry>
+    </collision>
+  </link>
+  
+  <link name="wall2">
+    <visual name="visual">      
+      <origin xyz="2.5 -0.5 1.3"/>
+      <geometry><box size="0.01 2 2"/></geometry>
+      <material name="grey"/>
+    </visual>
+    <collision name="collision">      
+      <origin xyz="2.5 -0.5 1.3"/>
+      <geometry><box size="0.01 2 2"/></geometry>
+    </collision>
+  </link>-->
+ 
+  <link name="overhead_camera"/>
+
+  <joint name="robot_to_world" type="fixed">
+    <child link="base_plate"/>
+    <parent link="world"/>
+  </joint>
+
+  <joint name="panel_nest_to_world" type="fixed">
+    <origin rpy="0 0 ${radians(-90)}" xyz="1.238 0 0"/>
+    <child link="panel_nest"/>
+    <parent link="world"/>
+  </joint>
+
+  <joint name="pickup_nest_to_world" type="fixed">
+    <origin rpy="0 0 ${radians(180)}" xyz="0.916 -0.9454 0"/>
+    <child link="pickup_nest"/>
+    <parent link="world"/>
+  </joint>
+
+  <joint name="walls_to_world" type="fixed">
+    <parent link="world"/>
+    <child link="testbed_walls"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+  
+  <joint name="floor_to_world" type="fixed">
+    <parent link="world"/>
+    <child link="floor"/>
+  </joint>
+  
+  <!--<joint name="wall1_to_world" type="fixed">
+    <origin rpy="0 0 -0.785" xyz="0 0 0"/>
+    <parent link="world"/>
+    <child link="wall1"/>
+  </joint>
+  
+  <joint name="wall2_to_world" type="fixed">
+    <origin rpy="0 0 0.785" xyz="0 0 0"/>
+    <parent link="world"/>
+    <child link="wall2"/>
+  </joint>
+  
+  <joint name="ceiling_to_world" type="fixed">
+    <parent link="world"/>
+    <child link="ceiling"/>
+  </joint>-->
+
+  <joint name="overhead_camera_to_world" type="floating">
+    <parent link="world"/>
+    <child link="overhead_camera"/>
+
+    <origin rpy="-3.0643986 0.023853 0.107951" xyz="0.2528 -2.4555 3.264"/>
+  </joint>
+
+  <!--<joint name="overhead_camera_to_world" type="floating">
+    <parent link="world"/>
+    <child link="overhead_camera"/>
+    //<origin rpy="${radians(180)} 0 0" xyz=".308 -2.2239 3.32"/>
+    <origin rpy="-3.0901665893944226 0.020179445742952443 0.05637854407723496" xyz="0.22644675 -2.46050185  3.44552755"/>
+  </joint>-->
+
+  <!--<joint name="gripper_camera_1_to_vacuum_gripper_tool" type="floating">
+    <parent link="vacuum_gripper_tool"/>
+    <child link="gripper_camera_1"/>
+    <origin rpy="0 0 ${radians(90)}" xyz="1.1 0.2 -0.520"/>
+  </joint>-->
+
+  <!--<joint name="gripper_camera_2_to_vacuum_gripper_tool" type="floating">
+    <parent link="vacuum_gripper_tool"/>
+    <child link="gripper_camera_2"/>
+    <origin rpy="0 0 ${radians(90)}" xyz="1.1 -0.2 -0.520"/>
+  </joint>-->
+
+  <xacro:if value="$(arg load_payloads)">
+    <xacro:include filename="$(find rpi_arm_composites_manufacturing_testbed)/urdf/leeward_mid_panel_payload.xacro"/>
+    <xacro:include filename="$(find rpi_arm_composites_manufacturing_testbed)/urdf/leeward_tip_panel_payload.xacro"/>
+    <xacro:include filename="$(find rpi_arm_composites_manufacturing_testbed)/urdf/panel_nest_leeward_tip_panel_target.xacro"/>
+    <xacro:include filename="$(find rpi_arm_composites_manufacturing_testbed)/urdf/panel_nest_leeward_mid_panel_target.xacro"/>
+    <xacro:include filename="$(find rpi_arm_composites_manufacturing_testbed)/urdf/pickup_nest_leeward_tip_panel_target.xacro"/>
+    <xacro:include filename="$(find rpi_arm_composites_manufacturing_testbed)/urdf/pickup_nest_leeward_mid_panel_target.xacro"/>
+    <xacro:include filename="$(find rpi_arm_composites_manufacturing_testbed)/urdf/vacuum_gripper_tool_markers.xacro"/>
+<xacro:include filename="$(find rpi_arm_composites_manufacturing_testbed)/urdf/panel_nest_markers.xacro"/>
+  </xacro:if>
+
+
+
+</robot>

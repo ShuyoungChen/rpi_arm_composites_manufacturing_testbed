@@ -1,0 +1,108 @@
+#!/usr/bin/env python
+
+#Provide a crude force sensor simulation for the manufacturing process
+
+from industrial_payload_manager.msg import PayloadArray
+from industrial_payload_manager.payload_transform_listener import PayloadTransformListener
+import rospy
+import time
+import numpy as np
+import general_robotics_toolbox as rox
+from geometry_msgs.msg import Wrench, WrenchStamped, Vector3
+import traceback
+from collections import namedtuple
+
+ContactObject = namedtuple("ContactObject", ["frame_id","p_contacts", "k", "s"])
+ContactTarget = namedtuple("ContactTarget", ["frame_id","p_rect1","p_rect2"])
+
+rospy.init_node("test_force_sensor_sim")
+
+tf_listener=PayloadTransformListener()
+
+current_payload=None
+
+def payload_cb(msg):
+    global current_payload
+    for p in msg.payloads:
+        if p.header.frame_id == "vacuum_gripper_tool":
+            current_payload=p.name
+            return
+    current_payload=None
+
+def compute_contact_wrench(obj, targets):
+    
+    F = np.zeros((3,))
+    T = np.zeros((3,))
+    
+    for t in targets:
+        world_to_target_tf=tf_listener.lookupTransform("world", t.frame_id, rospy.Time(0))
+        world_to_object_tf=tf_listener.lookupTransform("world", obj.frame_id, rospy.Time(0))
+        T_gp=world_to_object_tf.inv()*world_to_target_tf
+        
+        #T_sg=rox.Transform(np.eye(3), [0,0,0.5],"vacuum_gripper_force_sensor",obj.frame_id)
+        T_sg=tf_listener.lookupTransform("tool0",obj.frame_id,rospy.Time(0))
+                
+        for p_contact in obj.p_contacts:    
+            p_contact_1=np.array([p_contact[0],p_contact[1],0])
+            T_gc = rox.Transform(np.eye(3),p_contact_1,obj.frame_id,"contact_point")
+            T_pc = T_gp.inv() * T_gc
+                    
+            if T_pc.p[2]*obj.s > 0 and T_pc.p[0] >= t.p_rect1[0] and T_pc.p[0] <= t.p_rect2[0] \
+               and T_pc.p[1] >= t.p_rect1[1] and T_pc.p[1] <= t.p_rect2[1]:
+                f = -obj.s * obj.k * T_pc.p[2]                
+                
+                T_sc = T_sg * T_gc
+                        
+                F_contact = np.array([0,0,f])
+                T_contact = np.cross(T_sc.p, F_contact)
+                        
+                F+=F_contact
+                T+=T_contact
+                
+        
+    return Wrench(Vector3(*F),Vector3(*T))
+    
+
+def main():
+
+    payload_array_sub=rospy.Subscriber("payload",PayloadArray,payload_cb,queue_size=100)
+    
+    ft_sensor_pub=rospy.Publisher("ft_wrench",WrenchStamped,queue_size=100)
+    
+    time.sleep(1)
+    
+    rate=rospy.Rate(250)
+    
+    gripper_contact = ContactObject("vacuum_gripper_tool",[[-0.35,1],[0.35,1],[-0.35,-1],[0.35,-1]],5e2,1)
+    leeward_mid_panel_contact = ContactTarget("leeward_mid_panel_gripper_target",[-0.8, -1.0],[0.8,1.0])
+    leeward_tip_panel_contact = ContactTarget("leeward_tip_panel_gripper_target",[-0.8, -1.0],[0.8,1.0])
+    
+    leeward_mid_panel_object = ContactObject("leeward_mid_panel",[[0.2,0.2],[1.8,0.2],[0.2,1.4],[1.8,1.4]],5e5,-1)
+    leeward_mid_panel_nest_contact = ContactTarget("panel_nest_leeward_mid_panel_target",[0,0],[2,1.6])
+    leeward_tip_panel_object = ContactObject("leeward_tip_panel",[[0.2,0.2],[1.8,0.2],[0.2,1.4],[1.8,1.4]],5e5,-1)
+    leeward_tip_panel_nest_contact = ContactTarget("panel_nest_leeward_tip_panel_target",[0,0],[2,1.6])
+        
+    while not rospy.is_shutdown():
+        try:   
+            
+            if current_payload is None:            
+                W = compute_contact_wrench(gripper_contact, [leeward_mid_panel_contact, leeward_tip_panel_contact])
+            elif current_payload == "leeward_mid_panel":
+                W = compute_contact_wrench(leeward_mid_panel_object, [leeward_mid_panel_nest_contact])
+            elif current_payload == "leeward_tip_panel":
+                W = compute_contact_wrench(leeward_tip_panel_object, [leeward_tip_panel_nest_contact])
+            else:
+                W=Wrench()
+            
+            W_stamped=WrenchStamped()
+            W_stamped.wrench=W
+            W_stamped.header.frame_id="tool0"
+            W_stamped.header.stamp=rospy.Time.now()
+            ft_sensor_pub.publish(W_stamped)
+        except:
+            traceback.print_exc()
+        rate.sleep()
+    
+
+if __name__ == "__main__":
+    main()

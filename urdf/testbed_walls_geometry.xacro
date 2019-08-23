@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+<xacro:macro  name="testbed_walls_geometry" params="geometry_type:=collision">
+<xacro:element xacro:name="${geometry_type}">
+<origin rpy="${radians(90)} 0 ${radians(90)}" xyz="3.601 .051 1.219" />
+<geometry><box size="6.68 2.438 .241" /></geometry>
+</xacro:element>
+<xacro:element xacro:name="${geometry_type}">
+<origin rpy="${radians(90)} 0 0" xyz="1.194 -3.239 1.219" />
+<geometry><box size="5.055 2.438 .101" /></geometry>
+</xacro:element>
+<xacro:element xacro:name="${geometry_type}">
+<origin rpy="${radians(90)} 0 ${radians(-90)}" xyz="-1.239 1.295 1.219" />
+<geometry><box size="4.191 2.438 .19" /></geometry>
+</xacro:element>
+<xacro:element xacro:name="${geometry_type}">
+<origin rpy="0 0 0" xyz="3.37 -3.038 1.8" />
+<geometry><box size=".6 .4 3.6" /></geometry>
+</xacro:element>
+<xacro:element xacro:name="${geometry_type}">
+<origin rpy="${radians(90)} 0 ${radians(180)}" xyz="-2.083 -.75 1.219" />
+<geometry><box size="1.5 2.438 .1" /></geometry>
+</xacro:element>
+<xacro:element xacro:name="${geometry_type}">
+<origin rpy="0 0 0" xyz="3.395 3.04 1.8" />
+<geometry><box size=".55 .6 3.6" /></geometry>
+</xacro:element>
+<xacro:element xacro:name="${geometry_type}">
+<origin rpy="${radians(90)} 0 ${radians(180)}" xyz="-2.083 -3.238 1.219" />
+<geometry><box size="1.5 2.438 .1" /></geometry>
+</xacro:element>
+<xacro:element xacro:name="${geometry_type}">
+<origin rpy="${radians(90)} 0 ${radians(-90)}" xyz="-1.239 -2.045 2.134" />
+<geometry><box size="2.489 .61 .19" /></geometry>
+</xacro:element>
+<xacro:element xacro:name="${geometry_type}">
+<origin rpy="${radians(90)} 0 ${radians(180)}" xyz="1.194 3.296 1.219" />
+<geometry><box size="5.055 2.438 .19" /></geometry>
+</xacro:element>
+<xacro:element xacro:name="${geometry_type}">
+<origin rpy="0 ${radians(90)} 0" xyz="1.219 3.04 3.25" />
+<geometry><box size=".7 .6 3.803" /></geometry>
+</xacro:element>
+<xacro:element xacro:name="${geometry_type}">
+<origin rpy="0 0 0" xyz=".216 -2.892 3.25" />
+<geometry><box size=".54 1.375 .7" /></geometry>
+</xacro:element>
+<xacro:element xacro:name="${geometry_type}">
+<origin rpy="0 ${radians(90)} 0" xyz="2.97 -3.038 3.25" />
+<geometry><box size=".7 .4 .2" /></geometry>
+</xacro:element>
+<xacro:element xacro:name="${geometry_type}">
+<origin rpy="${radians(90)} 0 ${radians(180)}" xyz="3.395 -.049 3.25" />
+<geometry><box size=".55 .7 5.579" /></geometry>
+</xacro:element>
+<xacro:element xacro:name="${geometry_type}">
+<origin rpy="${radians(90)} 0 ${radians(180)}" xyz="-.933 2.64 3.25" />
+<geometry><box size=".5 .7 .2" /></geometry>
+</xacro:element>
+<xacro:element xacro:name="${geometry_type}">
+<origin rpy="${radians(180)} 0 0" xyz="-.983 3.04 1.8" />
+<geometry><box size=".6 .6 3.6" /></geometry>
+</xacro:element>
+</xacro:macro>
+</robot>

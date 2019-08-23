@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+
+<robot name="panels" xmlns:xacro="http://ros.org/wiki/xacro">
+<link name="leeward_tip_panel">
+<visual name="visual">
+    <origin rpy="0 0 0"/>
+    <geometry><mesh filename="package://rpi_arm_composites_manufacturing_testbed/meshes/panels/leeward_tip.stl"/></geometry>
+    <material name="panel">
+      <color rgba="0 0.5 0 1"/>
+    </material>
+  </visual>
+  <collision name="collision">
+    <origin rpy="0 0 0"/>
+    <geometry><mesh filename="package://rpi_arm_composites_manufacturing_testbed/meshes/panels/leeward_tip.stl"/></geometry>    
+  </collision>
+</link>
+<link name="leeward_tip_panel_marker_1">  
+  <visual name="visual">
+  <origin rpy="0 0 0" xyz="0 0 0"/> 
+  <geometry><mesh filename="package://rpi_arm_composites_manufacturing_testbed/meshes/markers/leeward_tip_marker_1.dae"/></geometry>
+  </visual>
+  <xacro:if value="$(arg payload_extensions)">
+    <aruco_marker>
+      <gridboard markersX="4" markersY="4" markerLength="0.04" markerSpacing="0.0075" dictionary="DICT_ARUCO_ORIGINAL" firstMarker="0"/>
+    </aruco_marker>
+  </xacro:if>
+</link>
+<link name="leeward_tip_panel_marker_2">  
+  <visual name="visual">
+  <origin rpy="0 0 0" xyz="0 0 0"/> 
+  <geometry><mesh filename="package://rpi_arm_composites_manufacturing_testbed/meshes/markers/leeward_tip_marker_2.dae"/></geometry>
+  </visual>
+  <xacro:if value="$(arg payload_extensions)">
+    <aruco_marker>
+      <gridboard markersX="8" markersY="3" markerLength="0.025" markerSpacing="0.0075" dictionary="DICT_ARUCO_ORIGINAL" firstMarker="50"/>
+    </aruco_marker>
+  </xacro:if>
+</link>
+<link name="leeward_tip_panel_gripper_target">
+  <xacro:if value="$(arg payload_extensions)">
+    <gripper_ft_threshold>
+      <pickup ft="250 250 250 250 250 250"/>
+      <place ft="500 500 500 500 500 500"/>
+    </gripper_ft_threshold>
+  </xacro:if>
+</link>
+
+<joint name="leeward_tip_panel_maker_1_j" type="fixed"> 
+  <parent link="leeward_tip_panel"/>
+  <child link="leeward_tip_panel_marker_1"/>
+  <origin xyz="2.3014 0.768 -0.167" rpy="0 -${radians(12.75)} ${radians(90)}"/>
+  <!--origin xyz="-1.7714 -0.768 0" rpy="${radians(0)} ${radians(0)} ${radians(-90)}"/-->
+</joint>
+
+<joint name="leeward_tip_panel_gripper_target_j" type="fixed">
+  <parent link="leeward_tip_panel"/>
+  <child link="leeward_tip_panel_gripper_target"/>
+  <origin xyz="0.922 0.9053 -.37" rpy="${radians(177.5)} ${radians(11)} ${radians(-92)}"/>
+</joint>
+
+<joint name="leeward_tip_panel_maker_2_j" type="fixed"> 
+  <parent link="leeward_tip_panel"/>
+  <child link="leeward_tip_panel_marker_2"/>
+  <origin xyz="0.1087 0.693 -0.188" rpy="0 -${radians(4.4)} ${radians(90)}"/>
+</joint>
+
+</robot>

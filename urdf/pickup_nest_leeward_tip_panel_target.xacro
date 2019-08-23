@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<robot name="pickup_nest_leeward_tip_panel_target" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <link name="pickup_nest_leeward_tip_panel_target"/>
+
+  <joint name="pickup_nest_to_leeward_tip_panel_target" type="fixed">
+    <parent link="pickup_nest"/>
+    <child link="pickup_nest_leeward_tip_panel_target"/>
+    <origin rpy="0 0 0" xyz="0 -0.1075 .45"/>
+  </joint>
+
+</robot>

@@ -1,0 +1,104 @@
+<?xml version="1.0" ?>
+<robot name="abb_irb6640_180_255_with_vacuum_gripper" xmlns:xacro="http://ros.org/wiki/xacro">
+
+
+  <xacro:include filename="$(find rpi_abb_irb6640_180_255_support)/urdf/irb6640_180_255_macro.xacro"/>
+  
+  <xacro:include filename="$(find rpi_arm_composites_manufacturing_testbed)/urdf/vacuum_gripper_geometry.xacro" />
+   
+  <xacro:abb_irb6640_180_255 prefix=""/>
+
+  <link name="gripper">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0.0127"/>
+      <geometry>        
+        <cylinder length="0.3" radius="0.05"/>
+      </geometry>
+      <material name="red">
+        <color rgba=".8 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0.0127"/>
+      <geometry>        
+        <cylinder length="0.3" radius="0.05"/>
+      </geometry>     
+    </collision>
+  </link>
+  
+  <link name="vacuum_gripper">
+      <xacro:vacuum_gripper_geometry />
+      <visual name="visual">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://rpi_arm_composites_manufacturing_testbed/meshes/vacuum_gripper/vacuum_gripper.stl"/>
+        </geometry>
+        <material name="gripper_grey">
+          <color rgba=".5 .5 .5 0"/>
+        </material> 
+      </visual>
+      <visual name="visual2">
+        <origin xyz="0 0 0.0508" rpy="0 0 0"/>
+        <geometry>
+            <cylinder length="0.1016" radius="0.1143" />
+        </geometry>
+        <material name="gripper_grey"/>          
+      </visual>
+      
+    <visual name="visual3">
+      <origin rpy="0 0 0" xyz="0.31975 -0.1016 -0.005"/>
+      <geometry><mesh filename="package://rpi_arm_composites_manufacturing_testbed/meshes/markers/gripper_marker.dae"/></geometry>
+      <material name="gripper_grey"/>
+    </visual>
+    <visual name="visual4">
+      <origin rpy="0 0 0" xyz="0.41275 0 -0.00953"/>
+      <geometry><box size="0.254 0.304 0.00635"/></geometry>
+      <material name="gripper_grey"/>
+    </visual>
+
+  </link>
+
+  <link name="vacuum_gripper_tool"/>
+
+  <joint name="tool0_vacuum_gripper" type="fixed">
+      <parent link="tool0"/>
+      <child link="vacuum_gripper"/>
+      <origin rpy="${radians(180)} 0 ${radians(-90)}" xyz="0 0 0.1016"/>
+  </joint>
+  
+  <joint name="tool0_gripper" type="fixed">
+      <parent link="vacuum_gripper_tool"/>
+      <child link="gripper"/>
+      <origin rpy="0 0 0" xyz="0 0 -0.3016"/>
+  </joint>
+  
+
+  <joint name="vacuum_gripper_tool" type="fixed">
+    <parent link="vacuum_gripper"/>
+    <child link="vacuum_gripper_tool"/>
+    <origin rpy="${radians(180)} 0 ${radians(-90)}" xyz="0 0 -0.320"/>
+  </joint>
+
+  <link name="base_plate">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0.0127"/>
+      <geometry>        
+        <box size="0.9144 0.9144 0.0254"/>
+      </geometry>
+      <material name="gripper_grey"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0.0127"/>
+      <geometry>        
+        <box size="0.9144 0.9144 0.0254"/>
+      </geometry>     
+    </collision>
+  </link>
+
+  <joint name="base_plate" type="fixed">
+    <parent link="base_plate"/>
+    <child link="base_link"/>
+    <origin rpy="0 0 0" xyz="0 0 .0254"/>
+  </joint>
+  
+</robot>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<robot name="panels_payload" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find rpi_arm_composites_manufacturing_testbed)/urdf/leeward_tip_panel_real.xacro"/>
+
+  <joint name="leeward_tip_panel_initial_pose" type="fixed">
+    <parent link="pickup_nest"/>
+    <child link="leeward_tip_panel"/>
+    <origin rpy="0 0 0" xyz="30 -0.08245 .425"/>
+  </joint> 
+</robot>

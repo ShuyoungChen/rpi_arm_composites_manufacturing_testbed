@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+<xacro:macro  name="vacuum_gripper_geometry" params="geometry_type:=collision">
+<xacro:element xacro:name="${geometry_type}">
+<origin rpy="0 0 0" xyz="-1.109 .004 .138" />
+<geometry><box size=".17 .496 .575" /></geometry>
+</xacro:element>
+<xacro:element xacro:name="${geometry_type}">
+<origin rpy="0 0 0" xyz="0 0 -.06" />
+<geometry><box size="2.154 .934 .12" /></geometry>
+</xacro:element>
+<xacro:element xacro:name="${geometry_type}">
+<origin rpy="${radians(180)} 0 ${radians(180)}" xyz="-.977 -.36 -.208" />
+<geometry><cylinder length=".176" radius=".064" /></geometry>
+</xacro:element>
+<xacro:element xacro:name="${geometry_type}">
+<origin rpy="${radians(180)} 0 ${radians(180)}" xyz="-.977 .258 -.208" />
+<geometry><cylinder length=".176" radius=".064" /></geometry>
+</xacro:element>
+<xacro:element xacro:name="${geometry_type}">
+<origin rpy="${radians(180)} 0 ${radians(180)}" xyz="-.033 -.353 -.208" />
+<geometry><cylinder length=".176" radius=".064" /></geometry>
+</xacro:element>
+<xacro:element xacro:name="${geometry_type}">
+<origin rpy="${radians(180)} 0 ${radians(180)}" xyz="1.006 .163 -.208" />
+<geometry><cylinder length=".176" radius=".064" /></geometry>
+</xacro:element>
+<xacro:element xacro:name="${geometry_type}">
+<origin rpy="${radians(180)} 0 ${radians(180)}" xyz="-.033 .239 -.208" />
+<geometry><cylinder length=".176" radius=".064" /></geometry>
+</xacro:element>
+<xacro:element xacro:name="${geometry_type}">
+<origin rpy="${radians(180)} 0 ${radians(180)}" xyz="1.015 -.353 -.208" />
+<geometry><cylinder length=".176" radius=".064" /></geometry>
+</xacro:element>
+</xacro:macro>
+</robot>

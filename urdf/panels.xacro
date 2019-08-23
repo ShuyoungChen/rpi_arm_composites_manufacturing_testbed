@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+
+<robot name="panels" xmlns:xacro="http://ros.org/wiki/xacro">
+<xacro:include filename="$(find rpi_arm_composites_manufacturing_testbed)/urdf/leeward_mid_panel.xacro"/>
+<xacro:include filename="$(find rpi_arm_composites_manufacturing_testbed)/urdf/leeward_tip_panel.xacro"/>
+</robot>

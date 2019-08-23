@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<robot name="panels_payload" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find rpi_arm_composites_manufacturing_testbed)/urdf/leeward_mid_panel_real.xacro"/>
+
+<xacro:arg name="leeward_mid_final" default="false"/>
+
+<xacro:unless value="$(arg leeward_mid_final)">
+  <joint name="leeward_mid_panel_initial_pose" type="fixed">
+    <parent link="pickup_nest"/>
+    <child link="leeward_mid_panel"/>
+    <origin rpy="0 0 0" xyz="50 -0.1475 .51"/>
+  </joint>
+</xacro:unless>
+
+<xacro:if value="$(arg leeward_mid_final)">
+  <joint name="leeward_mid_panel_initial_pose" type="fixed">
+    <parent link="panel_nest"/>
+    <child link="leeward_mid_panel"/>
+    <origin rpy="0 0 0" xyz="-2.32514 -0.1475 .425"/>
+  </joint>
+</xacro:if>
+
+</robot>

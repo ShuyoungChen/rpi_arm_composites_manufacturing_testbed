@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<robot name="vacuum_gripper_markers" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <link name="panel_nest_marker_1">
+    <xacro:if value="$(arg payload_extensions)">
+    <aruco_marker>
+      <gridboard markersX="4" markersY="4" markerLength=".004" markerSpacing=".0074" dictionary="DICT_ARUCO_ORIGINAL" firstMarker="32"/>
+    </aruco_marker>
+    </xacro:if>
+  </link>
+
+  <joint name="panel_nest_to_marker_1_j" type="fixed">
+    <parent link="panel_nest"/>
+    <child link="panel_nest_marker_1"/>
+    <origin rpy="0 0 ${radians(90)}" xyz="-2.42273 0.5302 0.04128"/>
+  </joint>
+
+</robot>

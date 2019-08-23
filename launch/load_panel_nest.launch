@@ -1,0 +1,3 @@
+<launch>
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find rpi_arm_composites_manufacturing_testbed)/urdf/panel_nest.xacro'" />
+</launch>

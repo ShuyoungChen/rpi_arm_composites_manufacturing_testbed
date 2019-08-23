@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<robot name="panel_nest_leeward_tip_panel_target" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <link name="panel_nest_leeward_tip_panel_target"/>
+
+  <joint name="panel_nest_to_leeward_tip_panel_target" type="fixed">
+    <parent link="panel_nest"/>
+    <child link="panel_nest_leeward_tip_panel_target"/>
+    <origin rpy="0 0 0" xyz="0 -0.1075 .425"/>
+  </joint>
+
+</robot>

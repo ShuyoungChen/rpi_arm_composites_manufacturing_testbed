@@ -1,0 +1,13 @@
+<launch>
+  <arg name="load_payloads" default="false"/>
+  <arg name="leeward_mid_final" default="false"/>
+  <include file="$(find rpi_arm_composites_manufacturing_testbed)/launch/load_arm_composites_manufacturing_testbed.launch">
+  <arg name="load_payloads" value="$(arg load_payloads)"/>
+  <arg name="leeward_mid_final" value="$(arg leeward_mid_final)"/>
+
+  </include>
+  <param name="use_gui" value="true" />
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find industrial_robot_client)/config/robot_state_visualize.rviz" required="true" />
+</launch>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <node name="urdf_to_payload_1" pkg="industrial_payload_manager" type="urdf_to_payload" args="
+--payload-xacro-in $(find rpi_arm_composites_manufacturing_testbed)/urdf/leeward_mid_panel_payload_real.xacro
+--payload-xacro-in $(find rpi_arm_composites_manufacturing_testbed)/urdf/leeward_tip_panel_payload_real.xacro 
+--payload-target-xacro-in $(find rpi_arm_composites_manufacturing_testbed)/urdf/panel_nest_leeward_mid_panel_target.xacro
+--payload-target-xacro-in $(find rpi_arm_composites_manufacturing_testbed)/urdf/panel_nest_leeward_tip_panel_target.xacro
+--payload-target-xacro-in $(find rpi_arm_composites_manufacturing_testbed)/urdf/pickup_nest_leeward_mid_panel_target.xacro
+--payload-target-xacro-in $(find rpi_arm_composites_manufacturing_testbed)/urdf/pickup_nest_leeward_tip_panel_target.xacro    
+--link-markers-xacro-in $(find rpi_arm_composites_manufacturing_testbed)/urdf/vacuum_gripper_tool_markers.xacro
+--link-markers-xacro-in $(find rpi_arm_composites_manufacturing_testbed)/urdf/panel_nest_markers.xacro
+--pub /payload"/>
+
+</launch>

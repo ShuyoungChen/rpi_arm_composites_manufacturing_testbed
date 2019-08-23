@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+
+<robot name="pickup_nest" xmlns:xacro="http://ros.org/wiki/xacro">
+
+<link name="pickup_nest">
+  <visual name="visual">
+    <origin xyz="1.000 0.0381 0.1041"/>
+    <geometry><box size="2.000 0.0762 0.0381"/></geometry>
+    <material name="grey">
+      <color rgba=".1 .1 .1 1"/>
+    </material> 
+  </visual>
+  <visual name="visual">
+    <origin xyz="1.000 1.5381 0.1041"/>
+    <geometry><box size="2.000 0.0762 0.0381"/></geometry>
+    <material name="grey"/> 
+  </visual>
+  <visual name="visual">
+    <origin xyz="0.0195 0.7881 0.1422"/>
+    <geometry><box size="0.0381 1.5762 0.0381"/></geometry>
+    <material name="grey"/> 
+  </visual>
+  <visual name="visual">
+    <origin xyz="1.9805 0.7881 0.1422"/>
+    <geometry><box size="0.0381 1.5762 0.0381"/></geometry>
+    <material name="grey"/> 
+  </visual>
+  <visual name="visual">
+    <origin xyz="0.0381 0.0381 0.042"/>
+    <geometry><box size="0.0762 0.0762 0.085"/></geometry>
+    <material name="grey"/> 
+  </visual>
+  <visual name="visual">
+    <origin xyz="0.0381 1.5381 0.042"/>
+    <geometry><box size="0.0762 0.0762 0.085"/></geometry>
+    <material name="grey"/> 
+  </visual>
+  <visual name="visual">
+    <origin xyz="1.9619 0.0381 0.042"/>
+    <geometry><box size="0.0762 0.0762 0.085"/></geometry>
+    <material name="grey"/> 
+  </visual>
+  <visual name="visual">
+    <origin xyz="1.9619 1.5381 0.042"/>
+    <geometry><box size="0.0762 0.0762 0.085"/></geometry>
+    <material name="grey"/> 
+  </visual>  
+  <collision name="collision">
+    <origin xyz="1.000 0.7881 0.0806"/>
+    <geometry><box size="2.000 1.5762 0.1612"/></geometry>
+  </collision>
+
+  <visual name="visual">
+    <origin rpy="0 1.5708 0" xyz=".308 -.270 0.085"/>
+    <geometry><mesh filename="package://rpi_arm_composites_manufacturing_testbed/meshes/panel_nest/nest_2_point_1.stl"/></geometry>
+    <material name="wood">
+      <color rgba=".727 .3476 .0020 1"/>
+    </material>
+  </visual>
+  <collision name="collision">
+    <origin rpy="0 1.5708 0" xyz=".308 -.270 0.085"/>
+    <geometry><mesh filename="package://rpi_arm_composites_manufacturing_testbed/meshes/panel_nest/nest_2_point_1.stl"/></geometry>    
+  </collision>
+
+  <visual name="visual">
+    <origin rpy="0 1.5708 0" xyz="1.730 -.305 0.085"/>
+    <geometry><mesh filename="package://rpi_arm_composites_manufacturing_testbed/meshes/panel_nest/nest_2_point_2.stl"/></geometry>
+    <material name="wood">
+      <color rgba=".727 .3476 .0020 1"/>
+    </material>
+  </visual>
+  <collision name="collision">
+    <origin rpy="0 1.5708 0" xyz="1.730 -.305 0.085"/>
+    <geometry><mesh filename="package://rpi_arm_composites_manufacturing_testbed/meshes/panel_nest/nest_2_point_2.stl"/></geometry>    
+  </collision>
+
+</link>
+
+</robot>
